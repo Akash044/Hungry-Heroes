@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { createContext, useState } from "react";
+import Home from "./components/HomePage/Home";
+import NavBar from "./components/Navbar/NavBar";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Checkout from "./components/Checkout/Checkout";
+export const cartContext = createContext();
 
 function App() {
+  const [cart, setCart] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <cartContext.Provider value={[cart, setCart]}>
+      <Router>
+        <div className="bg-violet-300">
+          <NavBar />
+
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/checkout">
+              <Checkout />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </cartContext.Provider>
   );
 }
 
